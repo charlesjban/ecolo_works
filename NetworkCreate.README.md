@@ -27,6 +27,8 @@ This should be an existing .csv table of p-values which correspond to the correl
 	[-networkout] Network File
 The name of the new network output file.  '.tsv' or '.txt' suffix reccomended.
 
+
+
 Optional file arguments
 
 	[-nodeout] Node Types File		file argument must be used in conjuction with [-varfile]
