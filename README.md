@@ -3,7 +3,7 @@ A small collection of programs for network creation and analysis from correlatio
 
 This currently being created for a Univeristy project
 Please see individual .README.md files for full functionality of each program
-Programs are under construction and will be created so
+
 
 **NetworkCreate.py:**
 
