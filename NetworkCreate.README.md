@@ -1,6 +1,6 @@
 
 # NetworkCreate.py
-MAIN FILE NEEDS UPDATING
+
 NetworkCreate - Creates a network file for interactions of variables in a system, based off a table of Correlations (Pearson's or Spearman's coefficients) and their associated P-values. The network file is designed for use with a network visualisation software, such as Cytoscape.
 
 ## SYNOPSIS
@@ -14,44 +14,49 @@ NetworkCreate.py is designed to work with the output of the R 'Hmisc' package 'r
 
 NetworkCreate.py will return a network in tab-separated-variable format, returning each edge (each variable as node1 and node2), the coefficient value, the p-value, the 'type' of interaction (this will be 'undefined' if node doesn't have a corresponsing variable type in the optional -varfile), and the 'direction' of the relationship (ie a positive correlation or a negative correlation). It was also return a file containing a tab separated table of each of the nodes and the respective variable type, both of which can be loaded into network visualisation software (such as Cytoscape) and used for visualisation and formatted based on edge and node parameters.
 
-## FILES
-Input
+## FILE ARGUMENTS
 
-Mandatory
+Mandatory file arguments
 
 	[-cfile] Correlation Coefficient File
-This should be a .csv table of correlation coefficients between each of the variables. It is assumed that the same variables are in the same order in both the x and y directions (ie the 'headers' in the firt row and column respectively). The x=y position will therefore be a value for an interaction between the same variable, so the coefficient will  be 1 and is ignored. 
+This should be an existing .csv table of correlation coefficients between each of the variables. It is assumed that the same variables are in the same order in both the x and y directions (ie the 'headers' in the firt row and column respectively). The x=y position will therefore be a value for an interaction between the same variable, so the coefficient will  be 1 and is ignored. 
 		
 	[-pfile] P-value File
-This should be a .csv table of p-values which correspond to the correlation coefficients. The positioning of the variables must match that of the correlation table. As with the correlation coefficient table, the x=y position will be a value for an interaction between the same variable, so the p-value will  be 'NA' and is ignored.
+This should be an existing .csv table of p-values which correspond to the correlation coefficients. The positioning of the variables must match that of the correlation table. As with the correlation coefficient table, the x=y position will be a value for an interaction between the same variable, so the p-value will  be 'NA' and is ignored.
 	
-Optional
+	[-networkout] Network File
+The name of the new network output file.  '.tsv' or '.txt' suffix reccomended.
+
+Optional file arguments
+
+	[-nodeout] Node Types File		file argument must be used in conjuction with [-varfile]
+The name of the new node types output file. '.tsv' or '.txt' suffix reccomended.
 
 	[-varfile] Variable Type File			file argument must be used in conjuction with [-nodeout]
-This should be a plain text file containing 'lists' of each variable type. The first item in the 'list' should be the variable 'type' and the remaining items should be the variables which are of that 'type'. Each list should be on a separate line and variables should be separated by space only (not commas). Eg:
+This should be an existing plain text file containing 'lists' of each variable type. The first item in the 'list' should be the variable 'type' and the remaining items should be the variables which are of that 'type'. Each list should be on a separate line and variables should be separated by space only (not commas). Eg:
 
 variableType1 variableA variableB variableC
 variableType2 variableD variableE variableF
 etc...
 
 The same variable should be named exactly as they are in the correlation/pvalue tables, and should not be named under more than one variable 'type' in the varfile. Any variable found in correlation table by NetworkCreate that is not listed in the vartype file will be returned as 'undefined'.
+
+
+## ADDITIONAL ARGUMENTS
+Optional
 	
-Output
-
-Mandatory
-
-	[-networkout] Network File
-The name of the new network output file.  '.tsv' or '.txt' suffix reccomended.
+	[cvalue] Minimim correlation value threshold
+The minimum correlation coefficient value NetworkCreate should consider to include in the network. Default is 0.5, however is is reccomended users choose their own value.
 	
-	[-nodeout] Node Types File		file argument must be used in conjuction with [-varfile]
-The name of 
-
-## ARGUMENTS
+	[-pvalue] Minimum p-value threshold
+The minimum p-value (associated with a correlation coefficient) that NetworkCreate should consider to include in the network. Default is P = 0.05
 
 ## VERSIONS
 
+NetworkCreate.py. Last Updated 21st March 2019
 
-## AUTHOR
+## AUTHORS
+
 Charles Bannister
 
 	
