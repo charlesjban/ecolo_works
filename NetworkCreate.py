@@ -21,16 +21,21 @@ options.add_argument("-varfile", help="choose a file to assign a variable label 
 args = options.parse_args()
 
 ## check that madatory arguments are present
-if args.varfile == None or args.pfile == None or args.cfile == None or args.networkout == None or args.nodeout == None :
-	sys.exit("Missing arguments. Mandatory arguments are:\n-pfile\n-cfile\n-networkout\n-nodefile\n-varfile\nSee manpage or use -help for more info")
+if args.pfile == None or args.cfile == None or args.networkout == None:
+	sys.exit("\nMissing arguments. Mandatory arguments are:\n-pfile\t-cfile\t-networkout\n\nSee .readme or use -help for more info")
+
+if args.varfile != None and args.nodeout == None or args.varfile == None and args.nodeout != None:
+	sys.exit("-varfile argument and -nodeout argument must both be present or absent")
+
 
 networkFile = open(args.networkout, "w")
 ## Create 2 indexed lists:
 ##  one for the variable types
 ##  one list of lists of the variables
 
-VarFile = open(args.varfile, "r")
-VarFileLists = VarFile.readlines()
+if args.varfile != None:
+	VarFile = open(args.varfile, "r")
+	VarFileLists = VarFile.readlines()
 
 # lists of each type of variable
 varLists = []
@@ -38,17 +43,19 @@ varLists = []
 varTypes = []
 
 # add the corresponding variables to the lists
-for i in range(0,(len(VarFileLists))):
-	split = VarFileLists[i].split(" ")
-	varTypes.insert(i, split[0].strip(":"))
-	varLists.insert(i, split[1:])
+if args.varfile != None:
+	for i in range(0,(len(VarFileLists))):
+		split = VarFileLists[i].split(" ")
+		varTypes.insert(i, split[0].strip(":"))
+		varLists.insert(i, split[1:])
 
 # create nodetype output file and add each node and corresponding type as table
-nodeType = open(args.nodeout, "w")
-print('Variable\tVariable Type', file = nodeType)
-for i in range(0,len(varTypes)):  # i is variable type
-	for var in varLists[i]:
-		print("%s\t%s"%(var.strip("\n"), varTypes[i]), file = nodeType)
+if args.varfile != None:
+	nodeType = open(args.nodeout, "w")
+	print('Variable\tVariable Type', file = nodeType)
+	for i in range(0,len(varTypes)):  # i is variable type
+		for var in varLists[i]:
+			print("%s\t%s"%(var.strip("\n"), varTypes[i]), file = nodeType)
 
 
 
@@ -86,23 +93,30 @@ for i in range(1,len(coefficients[0])):
 		try:
 			coefValue = float(coefficients[i][j])
 			pVal = float(pValues[i][j])
-			## if coefficient and p values are above cutoff, create new nodes and an edge
-			if (coefValue > float(args.cvalue) or coefValue < -float(args.cvalue)) and i != j:
-			#and pVal < float(args.pvalue):
-				var1Name = (coefficients[i][0]).strip()
-				newNode1 = Node(var1Name)
-				var2Name = (coefficients[0][j]).strip()
-				newNode2 = Node(var2Name)
-				## determine if the correlation is positive or negative
-				if coefValue > 0:
-					direction = "positive"
-				elif coefValue < 0:
-					direction = "negative"
-				
-				## determine and assign the interaction type from the input variable type file
-				var1Type = "undefined"
-				var2Type = "undefined"
-				## for each of the vartypes in lists, if it matches the variables, assign it as the variable type
+		# error exception
+		except:
+			## print variables which contained NAs (apart from those which would be expected to ie variable-variable)
+			if i != j:
+				print("The correlation/P-value between %s and %s returned an error and was not be considered. Most likely an 'NA' value"%(coefficients[i][0],coefficients[0][j]))	
+
+		## if coefficient and p values are above cutoff, create new nodes and an edge
+		if (coefValue > float(args.cvalue) or coefValue < -float(args.cvalue)) and i != j:
+		#and pVal < float(args.pvalue):
+			var1Name = (coefficients[i][0]).strip()
+			newNode1 = Node(var1Name)
+			var2Name = (coefficients[0][j]).strip()
+			newNode2 = Node(var2Name)
+			## determine if the correlation is positive or negative
+			if coefValue > 0:
+				direction = "positive"
+			elif coefValue < 0:
+				direction = "negative"
+			
+			## determine and assign the interaction type from the input variable type file
+			var1Type = "undefined"
+			var2Type = "undefined"
+			## for each ovf the vartypes in lists, if it matches the variables, assign it as the variable type
+			if args.varfile != None:
 				for k in range(0,len(varTypes)):
 					for var in varLists[k]:
 						if var1Name == var:
@@ -110,25 +124,22 @@ for i in range(1,len(coefficients[0])):
 						if var2Name == var:
 							var2Type = varTypes[k]
 
-				# create a new edge with the above parameters
-				newEdge = Edge(newNode1, newNode2, coefValue, pVal,("%s-%s"%(var1Type, var2Type)), direction)
+			# create a new edge with the above parameters
+			newEdge = Edge(newNode1, newNode2, coefValue, pVal,("%s-%s"%(var1Type, var2Type)), direction)
 
-				## add edge to the edgelist, only if the previous edge does not exist
-				edgeHolder = None
-				for existingEdge in edgeList:
-					if (str(existingEdge.node1.name) == newNode1.name and existingEdge.node2.name == newNode2.name) or (existingEdge.node2.name == newNode1.name and existingEdge.node1.name == newNode2.name):
-						edgeHolder = "this is an unused string"
-				if edgeHolder == None:
-					edgeList.append(newEdge)
-		# error exception
-		except:
-			## print variables which contained NAs (apart from those which would be expected to ie variable-variable)
-			if i != j:
-				print("The correlation/P-value between %s and %s returned an error and was not be considered. Most likely an 'NA' value"%(coefficients[i][0],coefficients[0][j]))
+			## add edge to the edgelist, only if the previous edge does not exist
+			edgeHolder = None
+			for existingEdge in edgeList:
+				if (str(existingEdge.node1.name) == newNode1.name and existingEdge.node2.name == newNode2.name) or (existingEdge.node2.name == newNode1.name and existingEdge.node1.name == newNode2.name):
+					edgeHolder = "this is an unused string"
+			if edgeHolder == None:
+				edgeList.append(newEdge)
+		
 
 ## output each edge and corresponsing components to output network file
 for edge in edgeList:
 	print("%s\t%s\t%s\t%s\t%s\t%s" %  (edge.node1.name, edge.node2.name, edge.coeff, edge.pval, edge.interactionType, edge.correlationDirection), file = networkFile)
 networkFile.close()
-nodeType.close()
+if args.varfile != None:
+	nodeType.close()
 
