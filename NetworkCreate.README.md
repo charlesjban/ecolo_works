@@ -16,7 +16,7 @@ NetworkCreate.py will return a network in tab-separated-variable format, returni
 
 ## FILE ARGUMENTS
 
-**Mandatory file arguments**
+**Mandatory file arguments:**
 
 	[-cfile] Correlation Coefficient File
 This should be an existing .csv table of correlation coefficients between each of the variables. It is assumed that the same variables are in the same order in both the x and y directions (ie the 'headers' in the firt row and column respectively). The x=y position will therefore be a value for an interaction between the same variable, so the coefficient will  be 1 and is ignored. 
