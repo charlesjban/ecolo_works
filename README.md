@@ -1,10 +1,8 @@
 # ecolo_works
-A small collection of programs for network creation and analysis from correlation tables
+A small collection of programs which creates networks for analysis, from variable-variable correlation coefficient tables
 
-This currently being created for a Univeristy project
 Please see individual .README.md files for full functionality of each program.
 
-Programs are currently under construction and will be added as completed
 
 **NetworkCreate.py:**
 
