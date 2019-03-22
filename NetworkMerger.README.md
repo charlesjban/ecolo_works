@@ -25,11 +25,17 @@ The second network file
 **Optional file arguments:**
 
 	[-n3]...[n9] Additional network files to merge
-Users can choose to add up to 7 additional network files(9 in total) to add by using the argument '-nX additionalFile' where X is a number ranging from 3-9.
+Users can choose to add up to 7 additional network files(9 in total) to add by using the argument: 
+	
+	'-nX additionalFile' 
+where 'X' is the proceeding number. 
 
-  [-f] Network File Name
+	[-f] Network File Name
  Users can choose the name of the merged network file. Default is "MergedNetwork.txt"
 
+Example usage:
+	
+	$ python3 NetworkMerger -n1 example1.txt -n2 secondExample.txt -n3 network3.txt -n4 anotherNetwork.txt -f Merged.txt
 
 ## VERSIONS
 
