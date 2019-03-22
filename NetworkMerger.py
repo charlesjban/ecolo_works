@@ -12,6 +12,7 @@ options.add_argument("-n6", help = "Add network file 6", default = None)
 options.add_argument("-n7", help = "Add network file 7", default = None)
 options.add_argument("-n8", help = "Add network file 8", default = None)
 options.add_argument("-n9", help = "Add network file 9", default = None)
+options.add_argument("-f", help = "Name of merged network file", default = "MergedNetwork.txt")
 args = options.parse_args()
 
 ## check that 2 networks are included
@@ -22,8 +23,8 @@ networkFileNames = [args.n1, args.n2]
  
 ## add additional file to network File list if file is argument is present
 additionalNetworkFileNames = [args.n3, args.n4, args.n5, args.n6, args.n7, args.n8, args.n9]
-for args in additionalNetworkFileNames:
-	if args != None:
+for arguments in additionalNetworkFileNames:
+	if arguments != None:
 		networkFileNames.append(args)
 
 ## define node class, which just has a name
@@ -51,8 +52,8 @@ class Edge:
 edgeList = []
 networks = []
 
-# output file depends on which cutoff value is used
-outfile = open("mergedNetwork.txt", "w+")
+
+outfile = open(str(args.f), "w+")
 print("Node1\tNode2\tInteraction Type\tInteraction direction\tInstances", file = outfile)
 
 for i in range(0,len(networkFileNames)):
