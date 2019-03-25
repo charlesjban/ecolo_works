@@ -1,0 +1,2 @@
+VariableType1 Erpobdellidae Glossiphonidae Lumbricidae Lumbriculidae Naididae Gammaridae Asselidae Rhyacophilidae Hydropsychidae Polycentropodidae Baetidae Heptageniidae Chironomidae Tipulidae Physidae 
+VariableType2 dissOperc dissOmgl pH temp BOD ammonia susSoils TOM nitrate SRP PO4yr no3d no3yr nh3d conductivity
