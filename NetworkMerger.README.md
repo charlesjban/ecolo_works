@@ -10,7 +10,7 @@ NetworkMerger.py mandatory arguments: [-n1 NetworkFile1] [-n2 NetworkFile2 ]
 
 ## DESCRIPTION
 
-NetworkMerger.py is designed to merge up to 9 network files created by NetworkCreate.py. The resulting output will be a NetworkFile containing each node. It will pass on information about the interaction 'type', and pass on correlation direction,  flagging up any 'conflicting' positive/negative correlations. The number of occurrences of each edge are also counted. As with the individual networks, the merged network file is designed for us with network visualisation software such as Cytoscape, in which conditional visual formatting can be used on nodes/edges highlight their properties, and used for more in-depth network analysis. 
+NetworkMerger.py is designed to merge up to 9 network files created by NetworkCreate.py. The resulting output will be a NetworkFile containing each edge. It will pass on information about the interaction 'type', and pass on correlation direction,  flagging up any 'conflicting' positive/negative correlations. The number of occurrences of each edge are also counted. As with the individual networks, the merged network file is designed for us with network visualisation software such as Cytoscape, in which conditional visual formatting can be used on nodes/edges highlight their properties, and used for more in-depth network analysis. 
 
 FILEs / ARGUMENTS
 
