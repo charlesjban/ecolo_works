@@ -6,7 +6,7 @@ NetworkCreate - Creates a network file for interactions of variables in a system
 ## SYNOPSIS
 
 networkCreate.py mandatory arguments: [-cfile correlationCoefficients.csv] [-pfile coefficentPvalues.csv] [-networkout Network.file]
-  optional arguments [-pvalue P-value threshold] [-cvalue correlation coefficient threshold] [-varfile VariableTypes.txt] [-nodeout NodeTypes.file]
+  optional arguments: [-pvalue P-value threshold] [-cvalue correlation coefficient threshold] [-varfile VariableTypes.txt] [-nodeout NodeTypes.file]
 
 ## DESCRIPTION
 
