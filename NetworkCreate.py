@@ -1,7 +1,7 @@
 ### networkCreate.py
 ### generates an undirected network in the form of a TSV text file
 ### input should be 2 .csv files, the output from "Hmisc"package in R:
-###  	- pearsons corrlelation coefficient between variabes
+###  	- pearsons/spearmans corrlelation coefficient between variabes
 ###  	- corresponding p-values
 
 import csv
